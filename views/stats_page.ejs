@@ -1,1 +1,27 @@
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Statistics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel = "stylesheet" type = "text/css" href = "../CSS/style_stats_page.css" />
+  </head>
+  <body>
+    <div class="container my-4">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="mb-0">Estatistica</h1>
+        </div>
+        <div class="card-body">
+          <p class="lead">Dinheiro Disponivel: <%= balance %>€</p>
+          <p class="lead">Dinheiro Gasto: <%= spent %>€</p>
+          <p class="lead">Dinheiro Ganho: <%= won %>€</p>
+        </div>
+        <div class="card-footer">
+          <a href="/" class="btn btn-outline-primary">Voltar ao menu principal</a>
+          <a style="margin-left: 5%;" href="/clear" class="btn btn-outline-primary">Limpar Conta</a>
+          <a style="margin-left: 5%;" href="/logout" class="btn btn-outline-primary">Terminar Sessão</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
