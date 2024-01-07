@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.use(cookieParser()); // Use cookie-parser middleware
 
-const connection = mysql.createConnection({
+const connection = mysql.createConnection({ // Create MySQL connection
   host: 'localhost',
   password: '',
   user: 'root',
@@ -25,15 +25,15 @@ let user = {
   id: -1
 };
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { // Redirect to login page
     res.redirect('/home');
 });
 
-app.get('/login', (req, res) => {
+app.get('/login', (req, res) => { // Render login page
   res.render('login_page');
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) => { // Handle login form submission
   user.username = req.body.username;
   user.password = req.body.password;
   if (user.username && user.password) {
@@ -53,13 +53,13 @@ app.post('/login', (req, res) => {
 app.get('/home', (req, res) => {
   const userId = req.cookies.userId; // Get user ID from cookie
   if (userId) {
-    connection.query('SELECT * FROM Users WHERE ID = ?', [userId], function(error, results, fields) {
+    connection.query('SELECT * FROM Users WHERE ID = ?', [userId], function(error, results, fields) { // Get user data from database
       if (results.length > 0) {
         user.username = results[0].nome
-        user.password = results[0].pass
+        user.password = results[0].pass 
         user.id = userId;
 
-        res.render('home_page', { user });
+        res.render('home_page', { user }); // Render home page with user data
       } else {
         res.redirect('/login');
       }
@@ -77,6 +77,10 @@ app.post('/less', (req, res) => {
     var userId = req.cookies.userId;
     var balance = 0;
     var less = 0
+    if(preco == null || preco == "" || preco == undefined){
+      alert("Por favor preencha todos os campos!");
+      return;
+  }
     connection.query("SELECT * FROM infos_credit WHERE ID_user = ?;", [userId], function(error, results, fields) {
         if (error) throw error;
         if (results.length > 0) {
@@ -85,7 +89,6 @@ app.post('/less', (req, res) => {
         }});
         console.log(balance);
         console.log(preco);
-        var newBalance = balance - preco;
 
         connection.query("UPDATE infos_credit SET Balance = (Balance - ?), less = (less + ?) WHERE ID_user = ?;", [preco,preco, userId], function(error, results, fields) {
             if (error) throw error;
@@ -100,6 +103,10 @@ res.render('more_page');
 app.post('/more', (req, res) => {
     var preco = req.body.quantia;
     var userId = req.cookies.userId;
+    if(preco == null || preco == "" || preco == undefined){
+        alert("Por favor preencha todos os campos!");
+        return;
+    }
     var balance = 0;
     var less = 0
     connection.query("SELECT * FROM infos_credit WHERE ID_user = ?;", [userId], function(error, results, fields) {
@@ -192,6 +199,6 @@ if (username && password && email) {
   
   
 
-app.listen(port, '192.168.1.76', () => {
-    console.log(`Server running at http://192.168.1.76:${port}/`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running at http://127.0.0.1:${port}/`);
   });

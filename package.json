@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Filipe Correia",
+  "author": "Nuno Eduardo",
   "license": "MIT",
   "dependencies": {
     "alert": "^5.1.4",
